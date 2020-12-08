@@ -42,5 +42,16 @@ var app = new Vue({
       console.log("item dropped on "+slot);
       this.player.assign(this.idDrag,slot);
     }
+  },
+  watch: {
+      idPlayer: function (newVal, oldVal){
+        if(isNaN(newVal)){
+          for (let i=0; i<players.length;i++){
+            if (players[i].name==newVal){
+              this.idPlayer = i;
+            }
+          }
+        }
+      }
   }
 })
