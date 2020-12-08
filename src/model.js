@@ -2,6 +2,8 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
+var nbItemBoutique = 7;
+
 var itemCats = [ 'helmet', 'crown', 'armor', 'clothes', 'weapon', 'lighter', 'purse', 'potion', 'spell', 'food'];
 
 var itemLimits = [
@@ -171,7 +173,7 @@ var players = [
 
 // create the shop, filling with items taken at random
 var shop = [];
-for(let i=0;i<10;i++) {
+for(let i=0;i<nbItemBoutique;i++) {
   let idx = getRandomInt(items.length);
   shop.push(items[idx]);
 }

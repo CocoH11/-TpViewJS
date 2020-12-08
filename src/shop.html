@@ -6,7 +6,7 @@
 <body>
   <div id="mydiv">
     <label for="idperso">#player:</label><input id="idperso" v-model="idPlayer"><br>
-    <div v-if="player != undefined">
+    <div v-if="player !== undefined">
       <h1>{{player.name}}, level {{player.level}}, life = {{player.life}}, strength =  {{player.strength}}</h1>
       <table border="1">
         <tr v-for="sl in player.slots">
