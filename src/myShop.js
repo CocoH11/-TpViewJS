@@ -15,7 +15,7 @@ Vue.component("myShop", {
       return shops[this.idShop];
     }
   },
-  props: [],
+  props: ['shops'],
   template: `
   <div>\
     <label for="idShop">#shop:</label><input id="idShop" v-model="idShop"><br> \

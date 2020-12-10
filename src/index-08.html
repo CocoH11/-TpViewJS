@@ -5,12 +5,11 @@
   <script src="myItemList.js"></script>
   <script src="myShop.js"></script>
   <script src="myPlayer.js"></script>
+  <script src = "mainComponent.js"></script>
 </head>
 <body>
   <div id="mydiv">
-    <my-player :players="players"></my-player>
-    <my-shop v-bind:shops.sync="shops" @items-removed="removedItems += $event"></my-shop>
-    <p>items removed:{{removedItems}}</p>
+    <main-component :players="players" :shops="shops"></main-component>
   </div>
   <script src="index-08.js"></script>
 </body>
