@@ -11,6 +11,24 @@ Vue.component("myPlayer", {
       </tr>
     </table>
     <br>
+    <p>Bought items :
+      <button draggable="true" v-for="(it,index) in player.boughtItems" @dragstart="dragStart(index)" @dragend="dragEnd()">{{it.name}}</button>
+    </p>
+    <br>
   </div>
-  `
+  `,
+  methods:{
+    dragStart(index) {
+      this.idDrag = index;
+      console.log("start dragging "+this.player.boughtItems[this.idDrag].name);
+    },
+    dragEnd() {
+      this.idDrag = -1;
+      console.log("stop dragging");
+    },
+    drop(slot) {
+      console.log("item dropped on "+slot);
+      this.player.assign(this.idDrag,slot);
+    }
+  }
 });
