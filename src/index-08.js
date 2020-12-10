@@ -14,5 +14,13 @@ var app = new Vue({
       });
       shops=Shop.fillShops();
     });
+
+    axios.get(url+'/persos/get')
+    .then(response=>{
+      players.splice(0, players.length);
+      response.data.forEach(e => {
+        players.push(Perso.fromObject(e));
+      });
+    });
   }
 })

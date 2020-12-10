@@ -83,7 +83,8 @@ var items = [
 
 class Perso {
 
-  constructor(name, level) {
+  constructor(_id, name, level) {
+    this._id = _id;
     this.name = name;
     this.level = level;
     this.slots = [
@@ -170,10 +171,16 @@ class Perso {
     }
     return false;
   }
+
+  static fromObject(obj) {
+    let it = new Perso(obj._id, obj.name, obj.level);
+    return it;
+  }
 }
 
 class Shop {
-  constructor(title, items){
+  constructor(_id ,title, items){
+    this._id=_id;
     this.title=title;
     this.items=items;
   }
@@ -188,7 +195,7 @@ class Shop {
         shopItems.push(items[idx]);
         console.log(items[idx]);
       }
-      let shop= new Shop("Shop"+i, shopItems);
+      let shop= new Shop(i,"Shop"+i, shopItems);
       listShops.push(shop);
     }
     return listShops;
