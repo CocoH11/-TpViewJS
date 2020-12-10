@@ -13,11 +13,25 @@ Vue.component("mainComponent", {
   template:
   `
   <div>
-    <label for="idPlayer">#player:</label><input id="idPlayer" v-model="idPlayer"><br> \
+    <label for="idPlayer">#player:</label><input list="playerslist" id="idPlayer" v-model="idPlayer"><br> \
+    <datalist id="playerslist">
+      <option v-for="p in players">{{p.name}}</option>
+    </datalist>
     <div v-if="player!==undefined"> \
       <my-player :player="this.player"></my-player> \
       <my-shop v-bind:shops.sync="this.shops" :player="player"></my-shop>\
     </div>
   </div>
-  `
+  `,
+  watch:{
+    idPlayer: function (newVal, oldVal){
+      if(isNaN(newVal)){
+        for (let i=0; i<players.length;i++){
+          if (players[i].name==newVal){
+            this.idPlayer = i;
+          }
+        }
+      }
+    }
+  }
 });
