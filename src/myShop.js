@@ -15,7 +15,7 @@ Vue.component("myShop", {
       return shops[this.idShop];
     }
   },
-  props: ['shops'],
+  props: ['shops', 'player'],
   template: `
   <div>\
     <label for="idShop">#shop:</label><input id="idShop" v-model="idShop"><br> \
@@ -24,7 +24,7 @@ Vue.component("myShop", {
     <my-item-list :item-list="shop.items" :nb-show="nbShow" v-bind:id-to-buy.sync="idToBuy"></my-item-list> \
     <label for="select">#items :</label><input id="select" v-model="selNums"> \
     <button v-if="selItems.length>0" @click="remove">remove {{selNames}}</button> \
-    <button v-if="idToBuy!=undefined && idToBuy>-1" @click="buy(this.shops)">buy {{shop.items[idToBuy].name}}</button> \
+    <button v-if="idToBuy!=undefined && idToBuy>-1" @click="buy">buy {{shop.items[idToBuy].name}}</button> \
   </div>
   `,
   methods:
@@ -34,21 +34,19 @@ Vue.component("myShop", {
       this.selNums="";
       this.$emit('items-removed',this.selNames); // send an event to parent.
     },
-    buy : function(shops) {
-      shops[this.idShop].items.splice(this.idToBuy, 1);
-      this.$emit('update:shops', shops);
-
-      // if (shop[this.idToBuy].price > this.player.gold) {
-      //   alert("Not enough gold");
-      // }
-      // else {
-      //   let r = confirm("want to buy " + shop[this.idToBuy].name+" for "+shop[this.idToBuy].price+"gp ?");
-      //   if (r == true) {
-      //     this.player.buy(shop[this.idToBuy]);
-      //     shop.splice(this.idToBuy,1);
-      //     this.idToBuy='';
-      //   }
-      // }
+    buy : function() {
+      if (shops[this.idShop].items[this.idToBuy].price > this.player.gold) {
+        alert("Not enough gold");
+      }
+      else {
+        let r = confirm("want to buy " + shops[this.idShop].items[this.idToBuy].name+" for "+shops[this.idShop].items[this.idToBuy].price+"gp ?");
+        if (r == true) {
+          this.player.buy(shops[this.idShop].items[this.idToBuy]);
+          shops[this.idShop].items.splice(this.idToBuy, 1);
+          this.idToBuy=-1;
+          this.$emit('update:shops', shops);
+        }
+      }
     }
   },
   watch:

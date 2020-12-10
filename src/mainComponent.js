@@ -16,7 +16,7 @@ Vue.component("mainComponent", {
     <label for="idPlayer">#player:</label><input id="idPlayer" v-model="idPlayer"><br> \
     <div v-if="player!==undefined"> \
       <my-player :player="this.player"></my-player> \
-      <my-shop v-bind:shops.sync="this.shops"></my-shop>\
+      <my-shop v-bind:shops.sync="this.shops" :player="player"></my-shop>\
     </div>
   </div>
   `
