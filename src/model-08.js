@@ -36,6 +36,11 @@ class Item {
     }
     this.effect = effect;
   }
+
+  static fromObject(obj) {
+    let it = new Item(obj._id, obj.name, obj.type,obj.price, obj.effect);
+    return it;
+  }
 }
 
 var items = [
@@ -174,7 +179,20 @@ class Shop {
   }
 
   static nbItemBoutique = 7;
-
+  static fillShops(){
+    let listShops=[];
+    for(let i=0; i<4; i++){
+      let shopItems=[];
+      for(let j=0;j<nbItemBoutique;j++) {
+        let idx = getRandomInt(items.length);
+        shopItems.push(items[idx]);
+        console.log(items[idx]);
+      }
+      let shop= new Shop("Shop"+i, shopItems);
+      listShops.push(shop);
+    }
+    return listShops;
+  }
 }
 
 var players = [
@@ -182,14 +200,13 @@ var players = [
 ];
 
 var shops=[];
-
+// for(let i=0; i<4; i++){
+//   let shopItems=[];
+//   for(let j=0;j<nbItemBoutique;j++) {
+//     let idx = getRandomInt(items.length);
+//     shopItems.push(items[idx]);
+//   }
+//   let shop= new Shop("Shop"+i, shopItems);
+//   shops.push(shop);
+// }
 // create the shop, filling with items taken at random
-for(let i=0; i<4; i++){
-  let shopItems=[];
-  for(let j=0;j<nbItemBoutique;j++) {
-    let idx = getRandomInt(items.length);
-    shopItems.push(items[idx]);
-  }
-  let shop= new Shop("Shop"+i, shopItems);
-  shops.push(shop);
-}

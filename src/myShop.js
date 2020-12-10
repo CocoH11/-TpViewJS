@@ -12,6 +12,7 @@ Vue.component("myShop", {
   },
   computed: {
     shop : function() {
+      if (isNaN(this.idShop) || this.idShop<0) return;
       return shops[this.idShop];
     }
   },
@@ -19,12 +20,14 @@ Vue.component("myShop", {
   template: `
   <div>\
     <label for="idShop">#shop:</label><input id="idShop" v-model="idShop"><br> \
-    <h1>{{shop.title}}</h1> \
-    <label>show</label><input v-model="nbShow"> \
-    <my-item-list :item-list="shop.items" :nb-show="nbShow" v-bind:id-to-buy.sync="idToBuy"></my-item-list> \
-    <label for="select">#items :</label><input id="select" v-model="selNums"> \
-    <button v-if="selItems.length>0" @click="remove">remove {{selNames}}</button> \
-    <button v-if="idToBuy!=undefined && idToBuy>-1" @click="buy">buy {{shop.items[idToBuy].name}}</button> \
+    <div v-if="shop !== undefined">
+      <h1>{{shop.title}}</h1> \
+      <label>show</label><input v-model="nbShow"> \
+      <my-item-list :item-list="shop.items" :nb-show="nbShow" v-bind:id-to-buy.sync="idToBuy"></my-item-list> \
+      <label for="select">#items :</label><input id="select" v-model="selNums"> \
+      <button v-if="selItems.length>0" @click="remove">remove {{selNames}}</button> \
+      <button v-if="idToBuy!=undefined && idToBuy>-1" @click="buy">buy {{shop.items[idToBuy].name}}</button> \
+    </div>
   </div>
   `,
   methods:
