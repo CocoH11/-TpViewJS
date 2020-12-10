@@ -1,0 +1,17 @@
+<html>
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="model-08.js"></script>
+  <script src="myItemList.js"></script>
+  <script src="myShop.js"></script>
+  <script src="myPlayer.js"></script>
+</head>
+<body>
+  <div id="mydiv">
+    <my-player :players="players"></my-player>
+    <my-shop v-bind:shops.sync="shops" @items-removed="removedItems += $event"></my-shop>
+    <p>items removed:{{removedItems}}</p>
+  </div>
+  <script src="index-08.js"></script>
+</body>
+</html>
