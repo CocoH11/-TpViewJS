@@ -13,6 +13,6 @@ var app = new Vue({
         items.push(Item.fromObject(e));
       });
       shops=Shop.fillShops();
-    })
+    });
   }
 })
