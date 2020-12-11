@@ -1,9 +1,29 @@
 Vue.component("myPlayer", {
   props:['player'],
+  data: function() {
+    return {
+      isCheatModeActived:false
+    }
+  }
+  ,
   template:
   `
-  <div> \
-    <h1>{{player.name}}, level {{player.level}}, life = {{player.life}}, strength =  {{player.strength}}</h1> \
+  <div> 
+    
+    <h1>{{player.name}}, level {{player.level}}, life = {{player.life}}, strength =  {{player.strength}}</h1> 
+    <div id="hiddenButtonDiv"> 
+        <button name="hiddenButton" id="hiddenButton" @click="cheatMode">
+            Mode Master activé
+        </button> 
+    </div>
+    <div id="cheatModeDiv" v-if="isCheatModeActived">
+        <label for="inputLVL">Modifier le level</label>
+        <input  id="inputLVL" name="inputLVL" />
+        
+        <label for="inputGold">Modifier les golds</label>
+        <input  id="inputGold" name="inputGold" />
+    </div>
+    
     <table border="1">
       <tr v-for="sl in player.slots">
         <td @dragover.prevent @drop="drop(sl)">{{sl.name}}</td>
@@ -47,6 +67,11 @@ Vue.component("myPlayer", {
           alert("slot updated");
         }
       })
+      console.log("item dropped on "+slot);
+      this.player.assign(this.idDrag,slot);
+    },
+    cheatMode(){
+
     }
   }
 });
