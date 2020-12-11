@@ -9,21 +9,28 @@ Vue.component("myPlayer", {
   template:
   `
   <div> 
-    
-    <h1>{{player.name}}, level {{player.level}}, life = {{player.life}}, strength =  {{player.strength}}</h1> 
     <div id="hiddenButtonDiv"> 
         <button name="hiddenButton" id="hiddenButton" @click="cheatMode">
             Mode Master activé
         </button> 
     </div>
-    <div id="cheatModeDiv" v-if="isCheatModeActived">
-        <label for="inputLVL">Modifier le level</label>
-        <input  id="inputLVL" name="inputLVL" />
-        
-        <label for="inputGold">Modifier les golds</label>
-        <input  id="inputGold" name="inputGold" />
-    </div>
+    <br> 
     
+    <h1>{{player.name}}, level {{player.level}}, vitality = {{player.vitality}}, strength =  {{player.strength}}</h1> 
+     
+    <div id="cheatModeDiv" v-if="isCheatModeActived">
+        <label>Modifier le level:
+            <br>
+            <input id="inputLVL" name="inputLVL" v-model="player.level" @change="changeStat"/>
+        </label>
+        <br>
+        <label>Modifier les golds:
+            <br>
+            <input id="inputGold" name="inputGold" v-model="player.gold"/>
+        </label>
+        
+    </div>
+    <br v-if="isCheatModeActived">
     <table border="1">
       <tr v-for="sl in player.slots">
         <td @dragover.prevent @drop="drop(sl)">{{sl.name}}</td>
@@ -71,7 +78,15 @@ Vue.component("myPlayer", {
       this.player.assign(this.idDrag,slot);
     },
     cheatMode(){
-
+      if (this.isCheatModeActived){
+        this.isCheatModeActived=false;
+      }else {
+        this.isCheatModeActived=true;
+      }
+    },
+    changeStat(){
+      this.player.updateCaracs();
+      this.$emit('update:player', this.player);
     }
   }
 });

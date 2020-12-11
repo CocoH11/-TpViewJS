@@ -18,7 +18,7 @@ Vue.component("mainComponent", {
       <option v-for="p in players">{{p.name}}</option>
     </datalist>
     <div v-if="player!==undefined"> \
-      <my-player :player="this.player"></my-player> \
+      <my-player v-bind:player.sync="this.player"></my-player> \
       <my-shop v-bind:shops.sync="this.shops" :player="player"></my-shop>\
     </div>
   </div>
