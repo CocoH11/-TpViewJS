@@ -4,7 +4,9 @@ Vue.component("gameMaster", {
       newItemName: '',
       newItemType: '',
       newItemPrice: '',
-      newItemEffect: ''
+      newItemEffect: '',
+      newPersoName: '',
+      newPersoGold: ''
     }
   },
   props: ['itemCats'],
@@ -24,6 +26,13 @@ Vue.component("gameMaster", {
     <input v-model="newItemEffect">
     <button @click="createItem">Create Item {{newItemName}}</button>
     <br>
+
+    <p>Create a new Perso</p>
+    <label for="newPersoName">name: </label>
+    <input id="newPersoName" v-model="newPersoName">
+    <label for="newPersoGold">gold: </label>
+    <input id="newPersoGold" v-model="newPersoGold" type="number">
+    <button @click="createPerso">Create Perso {{newPersoName}}</button>
   </div>
   `,
   methods:{
@@ -54,5 +63,37 @@ Vue.component("gameMaster", {
         }
       })
     },
+
+    createPerso: function(){
+      this.newPersoGold=Math.abs(this.newPersoGold);
+      let data={
+        name: this.newPersoName,
+        level: 1,
+        gold: this.newPersoGold,
+        strength:0,
+        slots:[
+          {name:'head', id:1, items:[]},
+          {name:'body', id:2, items:[]},
+          {name:'hands', id:3, items:[]},
+          {name:'belt', id:4, items:[]},
+          {name:'bag', id:5, items:[]}
+        ],
+        vitality: 0,
+        life:0,
+        armor: 0
+        // TODO:change order nicholas
+      }
+      axios.post("http://rpg.dut-info.cf/rpg/persos/create", data)
+      .then(response=>{
+        if (response.data.err==1) {
+          alert("cannot create a perso");
+        }
+        else{
+          alert("perso creation: success");
+          players.push(Perso.fromObject(response.data.data));
+          this.$emit("update:players", players);
+        }
+      })
+    }
   }
 });

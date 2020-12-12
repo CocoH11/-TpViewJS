@@ -83,7 +83,7 @@ var items = [
 
 class Perso {
 
-  constructor(_id, name, level) {
+  constructor(_id, name, level, gold) {
     this._id = _id;
     this.name = name;
     this.level = level;
@@ -96,7 +96,11 @@ class Perso {
     ];
     this.boughtItems = []; // list of item bought but not yet assigned
     this.life = 50*this.level; // the actual level of life
-    this.gold=500;
+    if (gold==undefined) {
+      this.gold=500;
+    }else{
+      this.gold=gold;
+    }
     this.updateCaracs();
   }
 
@@ -173,7 +177,7 @@ class Perso {
   }
 
   static fromObject(obj) {
-    let it = new Perso(obj._id, obj.name, obj.level);
+    let it = new Perso(obj._id, obj.name, obj.level, obj.gold);
     return it;
   }
 }

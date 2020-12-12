@@ -12,7 +12,7 @@
   <div id="mydiv">
     <button @click="activateGameMaster">ACTIVATE MASTER GAME MOOOOODE!!!!!!!</button>
     <div v-if="gameMasterActivated">
-      <game-master v-bind:items.sync="items" :item-cats="itemCats"></game-master>
+      <game-master v-bind:items.sync="items" v-bind:players.sync="players" :item-cats="itemCats"></game-master>
     </div>
     <div v-else>
       <main-component :players="players" :shops="shops"></main-component>
