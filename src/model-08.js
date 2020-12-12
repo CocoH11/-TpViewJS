@@ -43,47 +43,23 @@ class Item {
   }
 }
 
-var items = [
-  new Item(0, 'conic helmet', 'helmet', 200, 'A+10'),
-  new Item(1, 'great crown of apologia', 'crown', 200, 'A+20'),
-  new Item(2, 'band of joy', 'crown', 100, 'L+10'),
-  new Item(3, 'leather armor', 'armor', 100, 'A+10'),
-  new Item(4, 'broigne', 'armor', 200, 'A+20'),
-  new Item(5, 'hauberk', 'armor', 500, 'A+40'),
-  new Item(6, 'plate armor', 'armor', 1000, 'A+60'),
-  new Item(7, 'tuxedo', 'clothes', 600, 'L+1'),
-  new Item(8, 'cursed swimsuit', 'clothes', 10, 'A-10'),
-  new Item(9, 'unicorn cosplay', 'clothes', 200, 'L+10'),
-  new Item(10, 'dagger', 'weapon', 100, 'S+5'),
-  new Item(11, 'cursed dagger', 'weapon', 100, 'S-5'),
-  new Item(12, 'short sword', 'weapon', 200, 'S+10'),
-  new Item(13, 'cursed short sword', 'weapon', 200, 'S-10'),
-  new Item(14, 'long sword', 'weapon', 300, 'S+20'),
-  new Item(15, 'cursed long sword', 'weapon', 300, 'S-20'),
-  new Item(16, 'axe', 'weapon', 100, 'S+10'),
-  new Item(17, 'cursed axe', 'weapon', 100, 'S-10'),
-  new Item(18, 'great axe', 'weapon', 200, 'S+20'),
-  new Item(19, 'cursed great axe', 'weapon', 200, 'S-20'),
-  new Item(20, 'torch', 'lighter', 2, ''),
-  new Item(21, 'oil lamp', 'lighter', 10, ''),
-  new Item(22, 'leather purse', 'purse', 10, ''),
-  new Item(23, 'protection potion', 'potion', 100, 'a+10'),
-  new Item(24, 'health potion', 'potion', 100, 'l+10'),
-  new Item(25, 'strength potion', 'potion', 100, 's+10'),
-  new Item(26, 'fireball', 'spell', 1000, ''),
-  new Item(27, 'ice cone', 'spell', 1000, ''),
-  new Item(28, 'total healing', 'spell', 1000, ''),
-  new Item(29, 'invisibility', 'spell', 1000, ''),
-  new Item(30, 'levitation', 'spell', 1000, ''),
-  new Item(31, 'apple', 'food', 1, 'l+1'),
-  new Item(32, 'chicken', 'food', 10, 'l+5'),
-  new Item(33, 'beef', 'food', 15, 'l+10'),
-  new Item(34, 'wine', 'food', 2, 'l+2')
-];
+class Slot {
+  constructor(_id, name) {
+    this._id = _id;
+    this.name = name;
+    this.items = [];
+  }
+
+  static fromObject(obj) {
+    let sl = new Slot(obj._id, obj.name);
+    obj.items.forEach(item => { sl.items.push(Item.fromObject(item)); });
+    return sl;
+  }
+}
 
 class Perso {
 
-  constructor(_id, name, level, gold) {
+  constructor(_id, name, level) {
     this._id = _id;
     this.name = name;
     this.level = level;
@@ -96,11 +72,7 @@ class Perso {
     ];
     this.boughtItems = []; // list of item bought but not yet assigned
     this.life = 50*this.level; // the actual level of life
-    if (gold==undefined) {
-      this.gold=500;
-    }else{
-      this.gold=gold;
-    }
+    this.gold=500*this.level;
     this.updateCaracs();
   }
 
@@ -177,8 +149,15 @@ class Perso {
   }
 
   static fromObject(obj) {
-    let it = new Perso(obj._id, obj.name, obj.level, obj.gold);
-    return it;
+    let p = new Perso(obj._id, obj.name, obj.level);
+    p.gold = obj.gold;
+    p.life = obj.life;
+    p.vitality = obj.vitality;
+    p.strength = obj.strength;
+    p.armor = obj.armor;
+    p.slots.splice(0,p.slots.length);
+    obj.slots.forEach(slot => { p.slots.push(Slot.fromObject(slot)); });
+    return p;
   }
 }
 
@@ -206,10 +185,8 @@ class Shop {
   }
 }
 
-var players = [
-  new Perso("toto",1), new Perso("tutu",2)
-];
-
+var players = [];
+var items = [];
 var shops=[];
 // for(let i=0; i<4; i++){
 //   let shopItems=[];
