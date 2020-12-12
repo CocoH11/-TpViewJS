@@ -3,7 +3,14 @@ var app = new Vue({
   el: '#mydiv',
   data: {
     shops,
-    players
+    players,
+    items,
+    gameMasterActivated: false
+  },
+  methods:{
+    activateGameMaster(){
+      this.gameMasterActivated = !this.gameMasterActivated;
+    }
   },
   mounted(){
     axios.get(url+'/items/get')

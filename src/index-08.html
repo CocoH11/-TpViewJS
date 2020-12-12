@@ -3,14 +3,20 @@
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="model-08.js"></script>
-  <script src="myItemList.js"></script>
   <script src="myShop.js"></script>
   <script src="myPlayer.js"></script>
   <script src = "mainComponent.js"></script>
+  <script src = "gameMaster.js"></script>
 </head>
 <body>
   <div id="mydiv">
-    <main-component :players="players" :shops="shops"></main-component>
+    <button @click="activateGameMaster">ACTIVATE MASTER GAME MOOOOODE!!!!!!!</button>
+    <div v-if="gameMasterActivated">
+      <game-master v-bind:items.sync="items"></game-master>
+    </div>
+    <div v-else>
+      <main-component :players="players" :shops="shops"></main-component>
+    </div>
   </div>
   <script src="index-08.js"></script>
 </body>
