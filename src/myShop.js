@@ -51,9 +51,14 @@ Vue.component("myShop", {
           this.player.buy(shops[this.idShop].items[this.idToBuy]);
           shops[this.idShop].items.splice(this.idToBuy, 1);
           var tmp=this.idToBuy;
+          if (tmp==shops[this.idShop].items.length) {
+            tmp--;
+          }
+          console.log(tmp);
           this.idToBuy=-1;
           this.$emit('update:shops', shops);
           this.idToBuy=tmp;
+          console.log(this.idToBuy);
         }
       }
     }

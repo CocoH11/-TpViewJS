@@ -8,16 +8,16 @@ Vue.component("myPlayer", {
   ,
   template:
   `
-  <div> 
-    <div id="hiddenButtonDiv"> 
+  <div>
+    <div id="hiddenButtonDiv">
         <button name="hiddenButton" id="hiddenButton" @click="cheatMode">
             Mode Master activé
-        </button> 
+        </button>
     </div>
-    <br> 
-    
-    <h1>{{player.name}}, level {{player.level}}, vitality = {{player.vitality}}, strength =  {{player.strength}}</h1> 
-     
+    <br>
+
+    <h1>{{player.name}}, level {{player.level}}, vitality = {{player.vitality}}, strength =  {{player.strength}}, life {{player.life}}, gold {{player.gold}}, armor {{player.armor}}</h1> 
+
     <div id="cheatModeDiv" v-if="isCheatModeActived">
         <label>Modifier le level:
             <br>
@@ -28,7 +28,7 @@ Vue.component("myPlayer", {
             <br>
             <input id="inputGold" name="inputGold" v-model="player.gold"/>
         </label>
-        
+
     </div>
     <br v-if="isCheatModeActived">
     <table border="1">
