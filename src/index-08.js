@@ -5,6 +5,7 @@ var app = new Vue({
     shops,
     players,
     items,
+    itemCats,
     gameMasterActivated: false
   },
   methods:{

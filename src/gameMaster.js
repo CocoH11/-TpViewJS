@@ -7,6 +7,7 @@ Vue.component("gameMaster", {
       newItemEffect: ''
     }
   },
+  props: ['itemCats'],
   template:
   `
   <div>
@@ -14,7 +15,9 @@ Vue.component("gameMaster", {
     <label for="newItemName">name: </label>
     <input id="newItemName" v-model="newItemName">
     <label for="newItemType">type: </label>
-    <input v-model="newItemType">
+    <select id="newItemType" v-model="newItemType">
+        <option v-for="cat in itemCats" :value="cat">{{cat}}</option>
+    </select>
     <label for="newItemPrice">price: </label>
     <input v-model="newItemPrice" type="number">
     <label for="newItemEffect">effect: </label>
@@ -25,6 +28,7 @@ Vue.component("gameMaster", {
   `,
   methods:{
     createItem : function() {
+      console.log(this.itemCats);
       regex= new RegExp("^[ASL]{1}[+-]{1}[0-9]{1,3}$");
       if (!regex.test(this.newItemEffect)){
         alert("Bad effect!!!!!!!! "+this.newItemEffect);
