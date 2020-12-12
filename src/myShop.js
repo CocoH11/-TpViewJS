@@ -24,7 +24,7 @@ Vue.component("myShop", {
       <label>show</label><input v-model="nbShow"> \
       <ol> \
       <li v-for="(it,index) in shop.items">
-      <input type="radio" name="itemsToBuy" :id="'ittobuy'+index" :value="index"  @click="idToBuy=index">
+      <input type="radio" name="itemsToBuy" :id="'ittobuy'+index" :value="index"  @change="idToBuy=index">
       <label :for="'ittobuy'+index">{{it.name}} : {{it.price}} gp </label>
       </li> \
       </ol> \
