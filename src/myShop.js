@@ -12,18 +12,22 @@ Vue.component("myShop", {
   },
   computed: {
     shop : function() {
-      if (isNaN(this.idShop) || this.idShop<0) return;
       return shops[this.idShop];
     }
   },
-  props: ['shops', 'player'],
+  props: ['player'],
   template: `
   <div>\
     <label for="idShop">#shop:</label><input id="idShop" v-model="idShop"><br> \
     <div v-if="shop !== undefined">
       <h1>{{shop.title}}</h1> \
       <label>show</label><input v-model="nbShow"> \
-      <my-item-list :item-list="shop.items" :nb-show="nbShow" v-bind:id-to-buy.sync="idToBuy"></my-item-list> \
+      <ol> \
+      <li v-for="(it,index) in shop.items">
+      <input type="radio" name="itemsToBuy" :id="'ittobuy'+index" :value="index"  @click="idToBuy=index">
+      <label :for="'ittobuy'+index">{{it.name}} : {{it.price}} gp </label>
+      </li> \
+      </ol> \
       <label for="select">#items :</label><input id="select" v-model="selNums"> \
       <button v-if="selItems.length>0" @click="remove">remove {{selNames}}</button> \
       <button v-if="idToBuy!=undefined && idToBuy>-1" @click="buy">buy {{shop.items[idToBuy].name}}</button> \
@@ -46,8 +50,10 @@ Vue.component("myShop", {
         if (r == true) {
           this.player.buy(shops[this.idShop].items[this.idToBuy]);
           shops[this.idShop].items.splice(this.idToBuy, 1);
+          var tmp=this.idToBuy;
           this.idToBuy=-1;
           this.$emit('update:shops', shops);
+          this.idToBuy=tmp;
         }
       }
     }
