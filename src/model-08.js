@@ -198,13 +198,4 @@ class Shop {
 var players = [];
 var items = [];
 var shops=[];
-// for(let i=0; i<4; i++){
-//   let shopItems=[];
-//   for(let j=0;j<nbItemBoutique;j++) {
-//     let idx = getRandomInt(items.length);
-//     shopItems.push(items[idx]);
-//   }
-//   let shop= new Shop("Shop"+i, shopItems);
-//   shops.push(shop);
-// }
-// create the shop, filling with items taken at random
+
