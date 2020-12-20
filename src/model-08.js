@@ -4,6 +4,7 @@ function getRandomInt(max) {
 
 var nbItemBoutique = 10;
 
+
 var itemCats = [ 'helmet', 'crown', 'armor', 'clothes', 'weapon', 'lighter', 'purse', 'potion', 'spell', 'food'];
 
 var itemLimits = [
@@ -168,7 +169,16 @@ class Shop {
     this.items=items;
   }
 
-  static nbItemBoutique = 7;
+  refill(){
+    console.log("refill called");
+    for (var i = 0; i < nbItemBoutique; i++) {
+      let idx = getRandomInt(items.length);
+      this.items.push(items[idx]);
+      console.log("idx"+idx);
+    }
+    console.log("refill items: " +this.items);
+  }
+
   static fillShops(){
     let listShops=[];
     for(let i=0; i<4; i++){

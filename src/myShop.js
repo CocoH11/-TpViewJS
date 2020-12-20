@@ -2,7 +2,6 @@ Vue.component("myShop", {
   data: function() {
     return {
       idShop: 0,
-      nbShow : 5,
       selNums : "",
       selItems : [],
       selNames : "",
@@ -12,6 +11,7 @@ Vue.component("myShop", {
   },
   computed: {
     shop : function() {
+      idToBuy=-1;
       return shops[this.idShop];
     }
   },
@@ -21,15 +21,12 @@ Vue.component("myShop", {
     <label for="idShop">#shop:</label><input id="idShop" v-model="idShop"><br> \
     <div v-if="shop !== undefined">
       <h1>{{shop.title}}</h1> \
-      <label>show</label><input v-model="nbShow"> \
       <ol> \
       <li v-for="(it,index) in shop.items">
-      <input type="radio" name="itemsToBuy" :id="'ittobuy'+index" :value="index"  @change="idToBuy=index">
+      <input type="radio" name="itemsToBuy" :id="'ittobuy'+index" :value="index"  @change="idToBuy=index" :checked="idToBuy==index">
       <label :for="'ittobuy'+index">{{it.name}} : {{it.price}} gp </label>
       </li> \
       </ol> \
-      <label for="select">#items :</label><input id="select" v-model="selNums"> \
-      <button v-if="selItems.length>0" @click="remove">remove {{selNames}}</button> \
       <button v-if="idToBuy!=undefined && idToBuy>-1" @click="buy">buy {{shop.items[idToBuy].name}}</button> \
     </div>
   </div>
@@ -51,6 +48,10 @@ Vue.component("myShop", {
           this.player.buy(shops[this.idShop].items[this.idToBuy]);
           shops[this.idShop].items.splice(this.idToBuy, 1);
           this.idToBuy=-1;
+          console.log("nb items: "+shops[this.idShop].items.length);
+          if (shops[this.idShop].items.length==0) {
+            shops[this.idShop].refill();
+          }
           this.$emit('update:shops', shops);
         }
       }
